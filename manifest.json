@@ -1,0 +1,30 @@
+{
+  "description": "Logs Leetcode activity",
+  "manifest_version": 2,
+  "name": "LeetEx",
+  "version": "3.0",
+  "icons": {
+    "48": "icons/leetcode.png"
+  },
+  "browser_action": {
+    "default_icon": {
+      "48": "icons/leetcode.png"
+    },
+    "default_title": "Leetcode"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://leetcode.com/problems/*"
+      ],
+      "js": [
+        "leetcode.js"
+      ]
+    }
+  ],
+  "background": {
+    "scripts": [
+      "background.js"
+    ]
+  }
+}
