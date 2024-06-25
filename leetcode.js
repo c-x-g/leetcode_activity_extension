@@ -44,7 +44,7 @@ function addEventListenerSubmitButton() {
     document.getElementsByClassName(submitButtonClass)[0];
 
   submitButtonElement.addEventListener("click", () => {
-    // better to wait for button to become available again
+    // TODO: better to wait for button to become available again
     setTimeout(() => {
       const latestSubmissionClass =
         "flex flex-shrink-0 flex-col justify-between";

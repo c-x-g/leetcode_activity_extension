@@ -10,7 +10,7 @@
     "default_icon": {
       "48": "icons/leetcode.png"
     },
-    "default_title": "Leetcode"
+    "default_title": "Leetcode Activity Extension"
   },
   "content_scripts": [
     {

@@ -1,9 +1,49 @@
-let airtable_url = "";
-const airtable_pat = "";
+/**************************************************************************************/
+// add a listener to the extension icon to produce a popup windows
+// to insert AirTable credentials
+browser.browserAction.onClicked.addListener(() => {
+  let popupURL = browser.extension.getURL("popup/popup.html");
+  browser.windows.create({
+    url: popupURL,
+    type: "popup",
+    height: 400,
+    width: 600,
+  });
+});
 
+/**************************************************************************************/
+// handle loading AirTable credentials
+let airtable_url = "";
+let airtable_pat = "";
+
+function loadAirTableCredentials() {
+  try {
+    browser.storage.local
+      .get(["baseId", "tableId", "patToken"])
+      .then((item) => {
+        const { baseId, tableId, patToken } = item;
+        airtable_url = `https://api.airtable.com/v0/${baseId}/${tableId}`;
+        airtable_pat = patToken;
+
+        console.log(airtable_url);
+        console.log(airtable_pat);
+      });
+  } catch (error) {
+    console.log(`error occurred while fetching airtable credentials: ${error}`);
+  }
+}
+
+// load AirTable credentials initially when the extension runs
+loadAirTableCredentials();
+
+// load AirTable credentials if user inputs new data for Air Table Credentials
+browser.storage.onChanged.addListener(loadAirTableCredentials);
+
+/**************************************************************************************/
+// handle sending data to AirTable
 let tabSessions = {};
 
-function handleMessage(request, sender, sendResponse) {
+async function handleMessage(request, sender, sendResponse) {
   const tabId = sender.tab.id;
 
   // store a new session object if it doesn't currently exist in background
@@ -66,7 +106,6 @@ function handleMessage(request, sender, sendResponse) {
       sendToAirTable(tabSession, req_body);
     }
   }
-
   sendResponse({ response: "able to read message!" });
 }
 
@@ -92,6 +131,8 @@ function sendToAirTable(tabSession, body) {
     .catch((err) => console.log(err.message));
 }
 
+/**************************************************************************************/
+// calculate time information
 function calculateTimeData(timeStart) {
   const timeEnd = new Date();
 
