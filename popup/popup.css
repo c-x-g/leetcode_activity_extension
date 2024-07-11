@@ -45,3 +45,22 @@ input {
   width: 60%;
   margin-left: 20%;
 }
+
+.notification {
+  color: red;
+  width: 60%;
+  margin-left: 20%;
+  margin-top: 20px;
+  font-family: monospace;
+  font-size: 18px;
+}
+
+#provided-message {
+  visibility: hidden;
+  display: none;
+}
+
+#success-message {
+  visibility: hidden;
+  display: none;
+}
